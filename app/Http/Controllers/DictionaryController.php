@@ -30,8 +30,10 @@ class DictionaryController extends Controller
         $query = Word::query()->whereNotNull('meaning')->where('meaning', '!=', '');
 
         if ($request->filled('word')) {
-            $query->where('word', 'LIKE', $request->word . '%');
-        }
+    $searchPattern = str_replace('*', '%', $request->word);
+    $query->where('word', 'LIKE', $searchPattern);
+}
+
 
         if ($request->filled('word_length')) {
             $query->where('word_length', (int) $request->word_length);
